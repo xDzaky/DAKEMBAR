@@ -1,0 +1,219 @@
+/* ===== Enhanced Table Styles for Barang List ===== */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    table-layout: fixed;
+}
+
+.data-table th {
+    background-color: #f8f9fa;
+    padding: 15px 12px;
+    text-align: left;
+    font-weight: 600;
+    color: #2c3e50;
+    border-bottom: 2px solid #e9ecef;
+    position: sticky;
+    top: 0;
+}
+
+.data-table td {
+    padding: 12px;
+    border-bottom: 1px solid #e9ecef;
+    vertical-align: middle;
+    word-wrap: break-word;
+}
+
+.data-table tr:last-child td {
+    border-bottom: none;
+}
+
+.data-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* Column Widths */
+.data-table th:nth-child(1), 
+.data-table td:nth-child(1) {
+    width: 100px; /* Tanggal */
+}
+
+.data-table th:nth-child(2), 
+.data-table td:nth-child(2) {
+    width: 120px; /* Dari */
+}
+
+.data-table th:nth-child(3), 
+.data-table td:nth-child(3) {
+    width: 80px; /* Nomor */
+}
+
+.data-table th:nth-child(4), 
+.data-table td:nth-child(4) {
+    width: 100px; /* Tgl Bukti */
+}
+
+.data-table th:nth-child(5), 
+.data-table td:nth-child(5) {
+    width: 150px; /* Uraian */
+}
+
+.data-table th:nth-child(6), 
+.data-table td:nth-child(6) {
+    width: 80px; /* Satuan */
+}
+
+.data-table th:nth-child(7), 
+.data-table td:nth-child(7) {
+    width: 80px; /* Jumlah */
+}
+
+.data-table th:nth-child(8), 
+.data-table td:nth-child(8) {
+    width: 120px; /* Harga Satuan */
+}
+
+.data-table th:nth-child(9), 
+.data-table td:nth-child(9) {
+    width: 150px; /* Total */
+}
+
+.data-table th:nth-child(10), 
+.data-table td:nth-child(10) {
+    width: 150px; /* Keterangan */
+}
+
+.data-table th:nth-child(11), 
+.data-table td:nth-child(11) {
+    width: 150px; /* Aksi */
+}
+
+/* Text Alignment */
+.text-center {
+    text-align: center;
+}
+
+.text-end {
+    text-align: right;
+}
+
+/* Action Buttons */
+.actions-header {
+    text-align: center;
+}
+
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.btn-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    border: none;
+    width: 100%;
+}
+
+.btn-action i {
+    margin-right: 6px;
+}
+
+.btn-edit {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.btn-edit:hover {
+    background-color: #138496;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-delete {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.btn-delete:hover {
+    background-color: #c82333;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1200px) {
+    .data-table {
+        font-size: 0.9rem;
+    }
+    
+    .data-table th, 
+    .data-table td {
+        padding: 10px 8px;
+    }
+}
+
+@media (max-width: 992px) {
+    .data-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    
+    .action-buttons {
+        flex-direction: row;
+        gap: 6px;
+    }
+    
+    .btn-action {
+        width: auto;
+        padding: 6px 10px;
+    }
+    
+    .btn-action i {
+        margin-right: 0;
+    }
+    
+    .btn-action span {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .data-table th:nth-child(4),
+    .data-table td:nth-child(4) {
+        display: none; /* Sembunyikan Tgl Bukti di mobile */
+    }
+    
+    .data-table th:nth-child(10),
+    .data-table td:nth-child(10) {
+        display: none; /* Sembunyikan Keterangan di mobile */
+    }
+}
+
+@media (max-width: 576px) {
+    .data-table th:nth-child(3),
+    .data-table td:nth-child(3) {
+        display: none; /* Sembunyikan Nomor di mobile kecil */
+    }
+    
+    .data-table th:nth-child(6),
+    .data-table td:nth-child(6) {
+        display: none; /* Sembunyikan Satuan di mobile kecil */
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .btn-action {
+        width: 100%;
+    }
+}

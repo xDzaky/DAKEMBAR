@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stok Barang</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='stok_barang.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <h2><i class="fas fa-boxes"></i> Inventaris</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="{{ url_for('index') }}"><i class="fas fa-home"></i> Menu Utama</a></li>
+            <li><a href="{{ url_for('barang_list') }}"><i class="fas fa-arrow-down"></i> Barang Masuk</a></li>
+            <li><a href="{{ url_for('barang_tambah') }}"><i class="fas fa-plus"></i> Tambah Barang</a></li>
+            <li><a href="{{ url_for('pengeluaran_tambah') }}"><i class="fas fa-arrow-up"></i> Tambah Pengeluaran</a></li>
+            <li><a href="{{ url_for('list_pengeluaran') }}"><i class="fas fa-history"></i> Riwayat Keluar</a></li>
+            <li class="active"><a href="{{ url_for('stok_barang') }}"><i class="fas fa-box-open"></i> Stok Barang</a></li>
+            <li class="logout-link"><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <i class="fas fa-user-circle"></i>
+                <span>{{ session['username'] }}</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="content">
+        <div class="stok-container">
+            <div class="stok-header">
+                <h1 class="stok-title"><i class="fas fa-boxes"></i> Stok Barang Tersedia</h1>
+                <a href="/" class="back-btn"><i class="fas fa-arrow-left"></i> Kembali ke Menu</a>
+            </div>
+
+            <div class="table-responsive">
+                <table class="stok-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Barang</th>
+                            <th>Satuan</th>
+                            <th>Jumlah</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in data %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ row[1] }}</td>
+                            <td>{{ row[2] }}</td>
+                            <td>
+                                <div class="stock-quantity">
+                                    {% if row[3] > 20 %}
+                                        <span class="stock-indicator stock-high"></span>
+                                    {% elif row[3] > 5 %}
+                                        <span class="stock-indicator stock-medium"></span>
+                                    {% else %}
+                                        <span class="stock-indicator stock-low"></span>
+                                    {% endif %}
+                                    {{ row[3] }}
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
