@@ -368,7 +368,4 @@ def stok_barang():
     return render_template('stok_barang.html', data=rows)
 
 if __name__ == '__main__':
-    if not os.path.exists('db'):
-        os.makedirs('db')
-    init_db()
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
