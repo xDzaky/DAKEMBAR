@@ -14,7 +14,7 @@ Aplikasi manajemen stok barang berbasis web untuk sekolah, dibangun dengan Flask
 ## Teknologi
 - **Backend**: Python 3.9 + Flask
 - **Database**: SQLite3 (file-based)
-- **Frontend**: HTML5, CSS3, Bootstrap 5
+- **Frontend**: HTML5, CSS3
 - **Deployment**: Vercel (serverless)
 
 ## Instalasi Lokal
