@@ -2,7 +2,7 @@
 
 Aplikasi manajemen stok barang berbasis web untuk sekolah, dibangun dengan Flask dan SQLite. Dirancang khusus untuk memudahkan operator sarpras dalam mencatat transaksi barang masuk/keluar secara digital.
 
-![Dashboard Preview](screenshot.png) *(Contoh screenshot dashboard)*
+![Image](https://github.com/user-attachments/assets/862c0848-8513-4f6b-9848-0f4acc7140cc)
 
 ## Fitur Utama
 - **📦 Manajemen Barang Masuk**: Input data barang baru dengan detail lengkap (tanggal, sumber, jumlah, harga).
