@@ -1,15 +1,21 @@
-# DAKEMBAR - Aplikasi Data Keluar Masuk Barang
+# DAKEMBAR - Aplikasi Data Keluar Masuk Barang Sekolah
 
-Aplikasi manajemen stok barang berbasis web untuk sekolah, dibangun dengan Flask dan SQLite. Dirancang khusus untuk memudahkan operator sarpras dalam mencatat transaksi barang masuk/keluar secara digital.
+🌐 **Live Demo**: [dakembar.vercel.app](https://dakembar.vercel.app)
 
-![Image](https://github.com/user-attachments/assets/862c0848-8513-4f6b-9848-0f4acc7140cc)
+![Dashboard Preview](https://github.com/user-attachments/assets/862c0848-8513-4f6b-9848-0f4acc7140cc)
 
-## Fitur Utama
-- **📦 Manajemen Barang Masuk**: Input data barang baru dengan detail lengkap (tanggal, sumber, jumlah, harga).
-- **📤 Pengeluaran Barang**: Validasi stok otomatis sebelum barang dikeluarkan.
-- **📊 Laporan Real-time**: Pantau stok, riwayat transaksi, dan statistik periode tertentu.
-- **🔒 Sistem Login**: Autentikasi admin dengan username/password.
-- **⚠️ Notifikasi Stok Minim**: Peringatan ketika stok di bawah batas minimum.
+Aplikasi manajemen stok berbasis web untuk operator sarpras sekolah, menggantikan sistem pencatatan manual dengan solusi digital.
+
+## 🔍 Fitur Utama
+- **📥 Barang Masuk** dengan auto-calculate total harga
+- **📤 Validasi stok real-time** saat pengeluaran
+- **📊 Dashboard interaktif** dengan grafik statistik
+- **🔐 Sistem login admin** terproteksi
+
+## 🚀 Coba Sekarang
+Akses versi live yang sudah terdeploy:
+👉 [https://dakembar.vercel.app](https://dakembar.vercel.app)
+
 
 ## Teknologi
 - **Backend**: Python 3.9 + Flask
