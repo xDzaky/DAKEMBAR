@@ -101,7 +101,7 @@ DAKEMBAR/
 
 ## Dokumentasi Teknis
 ### Diagram Alur
-![Flowchart](flowchart.png) *(Deskripsi alur CRUD)*
+![Flowchart](https://github.com/user-attachments/assets/10f998d0-17f7-4d60-ac90-33d16daf11e5)
 
 ### Cuplikan Kode Penting
 ```python
@@ -153,7 +153,6 @@ Aplikasi ini menggunakan SQLite untuk penyimpanan lokal. Untuk penggunaan produk
    - Peringatan untuk mengganti password default
    - Penjelasan autentikasi session
 
-Tambahkan screenshot:
-- `dashboard.png` (tampilan menu utama)
-- `form_barang.png` (contoh input data)
-- `stok_warning.png` (notifikasi stok minim)
+- ![dashboard](https://github.com/user-attachments/assets/862c0848-8513-4f6b-9848-0f4acc7140cc)
+- ![tambah_barang](https://github.com/user-attachments/assets/7d2fafe7-5da5-4ecf-8840-9d99adcf5cba)
+- ![pengeluaran_barang](https://github.com/user-attachments/assets/fb61eab0-d3e0-4c03-8074-ae72cb189bd6)
