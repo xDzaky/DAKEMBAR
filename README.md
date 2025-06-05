@@ -1,113 +1,114 @@
-# DAKEMBAR - Aplikasi Data Keluar Masuk Barang
+# DAKEMBAR - Sistem Manajemen Stok Digital untuk Sekolah
 
 🌐 **Live Demo**: [dakembar.vercel.app](https://dakembar.vercel.app)
 
 ![Dashboard Preview](https://github.com/user-attachments/assets/862c0848-8513-4f6b-9848-0f4acc7140cc)
 
-Aplikasi manajemen stok berbasis web untuk operator sarpras sekolah, menggantikan sistem pencatatan manual dengan solusi digital.
+Aplikasi manajemen stok berbasis web untuk operator sarpras sekolah dengan fitur lengkap pengelolaan inventaris digital.
 
-## 🔍 Fitur Utama
-- **📥 Barang Masuk** dengan auto-calculate total harga
-- **📤 Validasi stok real-time** saat pengeluaran
-- **📊 Dashboard interaktif** dengan grafik statistik
-- **🔐 Sistem login admin** terproteksi
+## 🔥 Fitur Terbaru (Update)
+- **🔄 Sistem Stok Otomatis** - Perhitungan real-time saat barang masuk/keluar
+- **🚨 Notifikasi Stok Minim** - Peringatan visual untuk stok yang hampir habis
+- **📈 Laporan Bulanan** - Grafik interaktif riwayat transaksi
+- **🔒 Keamanan Enhanced** - Proteksi route dan validasi input
 
-## 🚀 Coba Sekarang
-Akses versi live yang sudah terdeploy:
-👉 [https://dakembar.vercel.app](https://dakembar.vercel.app)
+## 🛠 Teknologi Terupdate
+- **Backend**: Python 3.10 + Flask 2.3
+- **Database**: JSON-based (file `db/data.json`) - lebih ringan dari SQLite
+- **Frontend**: Jinja2 templates + Chart.js
+- **Deployment**: Vercel + Serverless Functions
 
+## 🚀 Panduan Instalasi (Versi Terbaru)
 
-## Teknologi
-- **Backend**: Python 3.9 + Flask
-- **Database**: SQLite3 (file-based)
-- **Frontend**: HTML5, CSS3
-- **Deployment**: Vercel (serverless)
-
-## Instalasi Lokal
-### Persyaratan:
-- Python 3.9+
-- Pip
+### Prasyarat:
+- Python 3.10+
+- Pipenv (rekomendasi)
 
 ### Langkah:
-1. Clone repositori:
-   ```bash
-   git clone https://github.com/xDzaky/DAKEMBAR.git
-   cd DAKEMBAR
-   ```
+```bash
+git clone https://github.com/xDzaky/DAKEMBAR.git
+cd DAKEMBAR
 
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+# Gunakan Pipenv untuk virtual environment
+pip install pipenv
+pipenv install
+pipenv shell
 
-3. Inisialisasi database:
-   ```bash
-   python app.py
-   ```
-   *(File `db/database.db` akan dibuat otomatis)*
+# Inisialisasi database
+python app.py --init
 
-4. Jalankan aplikasi:
-   ```bash
-   flask run
-   ```
-   Buka http://localhost:5000 di browser.
+# Jalankan aplikasi
+flask run --debug
+```
+Buka http://localhost:5000
 
-## Cara Menggunakan
-### Login:
-- **Username**: `admin`
-- **Password**: `admin123`
+## 📚 Panduan Pengguna Lengkap
 
-### 1. Tambah Barang Masuk:
-- Buka menu **Barang Masuk** → **Tambah Barang**
-- Isi form:
-  - Tanggal, sumber barang (contoh: "PT Sumber Jaya")
-  - Nomor dokumen (opsional)
-  - Uraian barang (contoh: "Kertas A4")
-  - Jumlah, satuan, harga satuan
-- Total harga akan dihitung otomatis
+### 1. Manajemen Barang Masuk
+- Fitur auto-complete untuk uraian barang
+- Perhitungan otomatis: `total = jumlah × harga_satuan`
+- Pencatatan nomor dokumen dan keterangan
 
-### 2. Keluarkan Barang:
-- Buka menu **Pengeluaran**
-- Pilih barang dari dropdown (hanya stok tersedia yang muncul)
-- Isi jumlah dan penerima
-- Sistem akan validasi stok otomatis
+### 2. Sistem Pengeluaran Cerdas
+```python
+# Contoh validasi stok dalam code:
+if InventoryManager.check_stock(uraian) < jumlah:
+    return "Stok tidak mencukupi!"
+```
 
-### 3. Pantau Stok:
-- Menu **Stok Barang** menampilkan:
-  - Daftar barang beserta jumlah tersedia
-  - Peringatan stok minim (warna merah)
+### 3. Fitur Admin:
+- Tambah/Edit/Hapus operator
+- Setel minimum stok per item
+- Backup data otomatis
 
-## Struktur Folder
+## 🗂 Struktur Proyek Terupdate
 ```
 DAKEMBAR/
-├── db/                  # Database SQLite
-│   └── database.db
-├── static/              # CSS dan assets
-│   ├── form_barang.css
-│   └── ...
-├── templates/           # Halaman HTML
-│   ├── index.html
-│   └── ...
-├── app.py               # Main application
+├── db/
+│   ├── data.json        # Database JSON utama
+│   └── backup/          # Auto-backup harian
+├── static/
+│   ├── css/
+│   │   └── dashboard.css
+│   └── js/
+│       └── chart.js     # Visualisasi data
+├── templates/
+│   ├── auth/            # Halaman login/register
+│   ├── components/      # Partial templates
+│   └── ...              # Halaman utama
+├── app.py               # Main app (Flask)
 ├── requirements.txt     # Dependencies
 └── vercel.json          # Konfigurasi deploy
 ```
 
+## 📊 Dokumentasi API Baru
+Endpoint | Method | Deskripsi
+---|---|---
+`/api/stock` | GET | Daftar stok tersedia
+`/api/check-stock` | POST | Validasi ketersediaan stok
+`/api/report` | GET | Generate laporan PDF
 
-## Dokumentasi Teknis
-### Diagram Alur
-![Flowchart](https://github.com/user-attachments/assets/10f998d0-17f7-4d60-ac90-33d16daf11e5)
+## 🖼 Screenshot Terupdate
+**Dashboard Modern**  
+![Dashboard](https://github.com/user-attachments/assets/862c0848-8513-4f6b-9848-0f4acc7140cc)
 
+**Form Cerdas**  
+![Form](https://github.com/user-attachments/assets/7d2fafe7-5da5-4ecf-8840-9d99adcf5cba)
 
-⚠️ **Catatan Penting**:  
-Aplikasi ini menggunakan SQLite untuk penyimpanan lokal. Untuk penggunaan produksi, disarankan migrasi ke database cloud seperti Supabase atau MySQL.
+## ⚠️ Catatan Migrasi
+Untuk pengguna versi lama (SQLite):
+1. Backup database SQLite
+2. Jalankan migrasi otomatis:
+   ```bash
+   python migrate.py --from-sqlite --to-json
+   ```
 
-**Dashboard**:  
-![Image](https://github.com/user-attachments/assets/862c0848-8513-4f6b-9848-0f4acc7140cc)
+## 🤝 Berkontribusi
+1. Fork repository
+2. Buat branch fitur (`git checkout -b fitur-baru`)
+3. Commit perubahan
+4. Push ke branch
+5. Buat Pull Request
 
-**Tambah_Barang**:  
-![Image](https://github.com/user-attachments/assets/7d2fafe7-5da5-4ecf-8840-9d99adcf5cba)
-
-**Pengeluaran_Barang**:  
-![Image](https://github.com/user-attachments/assets/fb61eab0-d3e0-4c03-8074-ae72cb189bd6)
-```
+## 📜 Lisensi
+MIT License - Bebas digunakan dan dimodifikasi untuk kebutuhan sekolah
