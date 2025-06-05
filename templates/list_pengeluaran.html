@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data Pengeluaran</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='list_pengeluaran.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <h2><i class="fas fa-boxes"></i> Inventaris</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="{{ url_for('index') }}"><i class="fas fa-home"></i> <span>Menu Utama</span></a></li>
+            <li><a href="{{ url_for('barang_list') }}"><i class="fas fa-arrow-down"></i> <span>Barang Masuk</span></a></li>
+            <li><a href="{{ url_for('barang_tambah') }}"><i class="fas fa-plus"></i> <span>Tambah Barang</span></a></li>
+            <li><a href="{{ url_for('pengeluaran_tambah') }}"><i class="fas fa-arrow-up"></i> <span>Tambah Pengeluaran</span></a></li>
+            <li class="active"><a href="{{ url_for('list_pengeluaran') }}"><i class="fas fa-history"></i> <span>Riwayat Keluar</span></a></li>
+            <li><a href="{{ url_for('stok_barang') }}"><i class="fas fa-box-open"></i> <span>Stok Barang</span></a></li>
+            <li class="logout-link"><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <i class="fas fa-user-circle"></i>
+                <span>{{ session['username'] }}</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-arrow-up"></i> Daftar Pengeluaran Barang</h2>
+                <div class="header-actions">
+                    <a href="{{ url_for('pengeluaran_tambah') }}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Tambah Pengeluaran
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Tanggal</th>
+                                <th>Barang</th>
+                                <th>Satuan</th>
+                                <th>Jumlah</th>
+                                <th>Penerima</th>
+                                <th>Keterangan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in data %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ row.tanggal }}</td>
+                                <td>{{ row.uraian }}</td>
+                                <td>{{ row.satuan }}</td>
+                                <td>{{ row.jumlah }}</td>
+                                <td>{{ row.penerima }}</td>
+                                <td>{{ row.keterangan or '-' }}</td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="7" class="empty-state">
+                                    <i class="fas fa-box-open"></i>
+                                    <h3>Belum ada data pengeluaran</h3>
+                                    <p>Silakan tambahkan pengeluaran barang terlebih dahulu</p>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

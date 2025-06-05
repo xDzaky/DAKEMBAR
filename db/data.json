@@ -1,0 +1,13 @@
+{
+    "barang": [],
+    "admin": [
+        {
+            "username": "admin",
+            "password": "admin123",
+            "role": "admin"
+        }
+    ],
+    "stok": [],
+    "pengeluaran": [],
+    "notifikasi": []
+}

@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Sistem Inventaris</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+</head>
+<body>
+<div class="wrapper">
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <h2><i class="fas fa-boxes"></i> Inventaris</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="active"><a href="{{ url_for('index') }}"><i class="fas fa-home"></i> Menu Utama</a></li>
+            <li><a href="{{ url_for('barang_list') }}"><i class="fas fa-arrow-down"></i> Barang Masuk</a></li>
+            <li><a href="{{ url_for('barang_tambah') }}"><i class="fas fa-plus"></i> Tambah Barang</a></li>
+            <li><a href="{{ url_for('pengeluaran_tambah') }}"><i class="fas fa-arrow-up"></i> Tambah Pengeluaran</a></li>
+            <li><a href="{{ url_for('list_pengeluaran') }}"><i class="fas fa-history"></i> Riwayat Keluar</a></li>
+            <li><a href="{{ url_for('stok_barang') }}"><i class="fas fa-box-open"></i> Stok Barang</a></li>
+            <li class="logout-link"><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <i class="fas fa-user-circle"></i>
+                <span>{{ session['username'] }}</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="content">
+        <div class="container">
+            <h1><i class="fas fa-tachometer-alt"></i> Dashboard</h1>
+            
+            <!-- Statistik Cepat -->
+            <div class="quick-stats">
+                <div class="stat-card">
+                    <div class="stat-icon blue">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Barang Masuk</h3>
+                        <span id="total-barang">0</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon red">
+                        <i class="fas fa-arrow-up"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Barang Keluar</h3>
+                        <span id="total-pengeluaran">0</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green">
+                        <i class="fas fa-boxes"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Total Stok</h3>
+                        <span id="total-stok">0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Notifikasi Stok Rendah -->
+            <div class="alert-section" id="low-stock-alert">
+                <h3><i class="fas fa-exclamation-triangle"></i> Peringatan Stok</h3>
+                <div class="alert-content" id="low-stock-items">
+                    <!-- Diisi oleh JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Grafik -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3><i class="fas fa-chart-bar"></i> Statistik Barang Masuk dan Keluar</h3>
+                    <div class="chart-tabs">
+                        <button class="chart-tab active" onclick="showChart('week')">Minggu Ini</button>
+                        <button class="chart-tab" onclick="showChart('month')">Bulan Ini</button>
+                    </div>
+                </div>
+                <!-- Navigation for weekly view -->
+                <div id="week-navigation" class="chart-navigation">
+                    <button class="nav-button" onclick="changeWeek(-1)">
+                        <i class="fas fa-chevron-left"></i> Minggu Sebelumnya
+                    </button>
+                    <span id="week-range" class="week-range"></span>
+                    <button class="nav-button" onclick="changeWeek(1)">
+                        Minggu Berikutnya <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                <div class="chart-row">
+                    <div class="chart-box">
+                        <h4><i class="fas fa-arrow-down"></i> Barang Masuk</h4>
+                        <canvas id="barangMasukChart"></canvas>
+                    </div>
+                    <div class="chart-box">
+                        <h4><i class="fas fa-arrow-up"></i> Barang Keluar</h4>
+                        <canvas id="pengeluaranChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let barangMasukChart, pengeluaranChart;
+    let currentPeriod = 'week';
+    let currentWeekOffset = 0;
+    
+    // Format tanggal
+    function formatDate(dateStr) {
+        const options = { weekday: 'short', day: 'numeric', month: 'short' };
+        return new Date(dateStr).toLocaleDateString('id-ID', options);
+    }
+    
+    // Dapatkan rentang minggu
+    function getWeekRange(offset = 0) {
+        const now = new Date();
+        const day = now.getDay();
+        const diff = now.getDate() - day + (day === 0 ? -6 : 1) + (offset * 7);
+        const start = new Date(now.setDate(diff));
+        const end = new Date(start);
+        end.setDate(start.getDate() + 6);
+        
+        return {
+            start: start.toISOString().split('T')[0],
+            end: end.toISOString().split('T')[0],
+            display: `${start.toLocaleDateString('id-ID')} - ${end.toLocaleDateString('id-ID')}`
+        };
+    }
+    
+    // Update navigasi mingguan
+    function updateWeekNavigation() {
+        const weekNav = document.getElementById('week-navigation');
+        if (currentPeriod === 'week') {
+            weekNav.style.display = 'flex';
+            const weekRange = getWeekRange(currentWeekOffset);
+            document.getElementById('week-range').textContent = weekRange.display;
+        } else {
+            weekNav.style.display = 'none';
+        }
+    }
+    
+    // Ganti minggu
+    function changeWeek(offset) {
+        currentWeekOffset += offset;
+        updateWeekNavigation();
+        loadChartData();
+    }
+    
+    // Tampilkan chart berdasarkan periode
+    function showChart(period) {
+        currentPeriod = period;
+        currentWeekOffset = 0;
+        
+        document.querySelectorAll('.chart-tab').forEach(tab => {
+            tab.classList.remove('active');
+        });
+        event.target.classList.add('active');
+        
+        updateWeekNavigation();
+        loadChartData();
+    }
+    
+    // Format angka
+    function formatNumber(num) {
+        return new Intl.NumberFormat('id-ID').format(num);
+    }
+    
+    // Muat data chart
+    function loadChartData() {
+    let url = '/api/chart-data';
+    if (currentPeriod === 'week') {
+        const weekRange = getWeekRange(currentWeekOffset);
+        url = `/api/chart-data?start_date=${weekRange.start}&end_date=${weekRange.end}`;
+    }
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            // Update statistik cepat
+            document.getElementById('total-barang').textContent = formatNumber(data.stats.total_barang);
+            document.getElementById('total-pengeluaran').textContent = formatNumber(data.stats.total_pengeluaran);
+            document.getElementById('total-stok').textContent = formatNumber(data.stats.total_stok);
+            // Update notifikasi stok rendah
+            const lowStockContainer = document.getElementById('low-stock-items');
+            if (data.low_stock.length > 0) {
+                document.getElementById('low-stock-alert').style.display = 'block';
+                lowStockContainer.innerHTML = data.low_stock.map(item => `
+                    <div class="alert-item">
+                        <span class="item-name">${item.nama}</span>
+                        <span class="item-stock ${item.jumlah === 0 ? 'out-of-stock' : 'low-stock'}">
+                            ${item.jumlah} ${item.jumlah === 0 ? 'HABIS' : 'tersedia'} (min. ${item.min_stok})
+                        </span>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('low-stock-alert').style.display = 'none';
+            }
+            // Update chart
+            updateCharts(data);
+        })
+        .catch(error => console.error('Error:', error));
+    }
+    
+    // Update chart
+    function updateCharts(data) {
+        const barangData = data.barang_masuk;
+        const pengeluaranData = data.pengeluaran;
+        
+        const barangLabels = barangData.map(item => item.day);
+        const barangValues = barangData.map(item => item.total);
+        
+        const pengeluaranLabels = pengeluaranData.map(item => item.day);
+        const pengeluaranValues = pengeluaranData.map(item => item.total);
+        
+        // Opsi untuk tampilan bulanan
+        const monthlyOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Jumlah Barang',
+                        font: {
+                            weight: 'bold'
+                        }
+                    },
+                    grid: {
+                        color: 'rgba(0, 0, 0, 0.05)'
+                    }
+                },
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'day',
+                        displayFormats: {
+                            day: 'dd MMM'
+                        }
+                    },
+                    ticks: {
+                        maxRotation: 45,
+                        minRotation: 45,
+                        font: {
+                            size: 10
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Tanggal',
+                        font: {
+                            weight: 'bold'
+                        }
+                    },
+                    grid: {
+                        display: false
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        font: {
+                            size: 12,
+                            weight: 'bold'
+                        }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        title: function(context) {
+                            return formatDate(context[0].label);
+                        },
+                        label: function(context) {
+                            return `Jumlah: ${formatNumber(context.raw)}`;
+                        }
+                    }
+                }
+            }
+        };
+        
+        // Opsi untuk tampilan mingguan
+        const weeklyOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Jumlah Barang',
+                        font: {
+                            weight: 'bold'
+                        }
+                    },
+                    grid: {
+                        color: 'rgba(0, 0, 0, 0.05)'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Tanggal',
+                        font: {
+                            weight: 'bold'
+                        }
+                    },
+                    grid: {
+                        display: false
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        font: {
+                            size: 12,
+                            weight: 'bold'
+                        }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return `Jumlah: ${formatNumber(context.raw)}`;
+                        }
+                    }
+                }
+            }
+        };
+        
+        // Update atau buat chart barang masuk
+        const barangCtx = document.getElementById('barangMasukChart').getContext('2d');
+        if (barangMasukChart) {
+            barangMasukChart.data.labels = barangLabels;
+            barangMasukChart.data.datasets[0].data = barangValues;
+            barangMasukChart.options = currentPeriod === 'week' ? weeklyOptions : monthlyOptions;
+            barangMasukChart.update();
+        } else {
+            barangMasukChart = new Chart(barangCtx, {
+                type: 'bar',
+                data: {
+                    labels: barangLabels,
+                    datasets: [{
+                        label: 'Jumlah Barang Masuk',
+                        data: barangValues,
+                        backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1,
+                        borderRadius: 4
+                    }]
+                },
+                options: currentPeriod === 'week' ? weeklyOptions : monthlyOptions
+            });
+        }
+        
+        // Update atau buat chart pengeluaran
+        const pengeluaranCtx = document.getElementById('pengeluaranChart').getContext('2d');
+        if (pengeluaranChart) {
+            pengeluaranChart.data.labels = pengeluaranLabels;
+            pengeluaranChart.data.datasets[0].data = pengeluaranValues;
+            pengeluaranChart.options = currentPeriod === 'week' ? weeklyOptions : monthlyOptions;
+            pengeluaranChart.update();
+        } else {
+            pengeluaranChart = new Chart(pengeluaranCtx, {
+                type: 'bar',
+                data: {
+                    labels: pengeluaranLabels,
+                    datasets: [{
+                        label: 'Jumlah Barang Keluar',
+                        data: pengeluaranValues,
+                        backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1,
+                        borderRadius: 4
+                    }]
+                },
+                options: currentPeriod === 'week' ? weeklyOptions : monthlyOptions
+            });
+        }
+    }
+    
+    // Muat data saat halaman pertama kali dibuka
+    document.addEventListener('DOMContentLoaded', function () {
+        updateWeekNavigation();
+        loadChartData();
+        setChartHeight(); // Initialize chart heights
+        window.addEventListener('resize', setChartHeight); // Update on resize
+    });
+</script>
+</body>
+</html>
