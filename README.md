@@ -1,4 +1,4 @@
-# DAKEMBAR - Aplikasi Data Keluar Masuk Barang Sekolah
+# DAKEMBAR - Aplikasi Data Keluar Masuk Barang
 
 🌐 **Live Demo**: [dakembar.vercel.app](https://dakembar.vercel.app)
 
