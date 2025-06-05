@@ -97,10 +97,10 @@ DAKEMBAR/
 Aplikasi ini menggunakan SQLite untuk penyimpanan lokal. Untuk penggunaan produksi, disarankan migrasi ke database cloud seperti Supabase atau MySQL.
 ```
 **Dashboard**:  
-![dashboard](https://github.com/user-attachments/assets/862c0848-8513-4f6b-9848-0f4acc7140cc)
+![Image](https://github.com/user-attachments/assets/862c0848-8513-4f6b-9848-0f4acc7140cc)
 
 **Tambah_Barang**:  
-![tambah_barang](https://github.com/user-attachments/assets/7d2fafe7-5da5-4ecf-8840-9d99adcf5cba)
+![Image](https://github.com/user-attachments/assets/7d2fafe7-5da5-4ecf-8840-9d99adcf5cba)
 
 **Pengeluaran_Barang**:  
-![pengeluaran_barang](https://github.com/user-attachments/assets/fb61eab0-d3e0-4c03-8074-ae72cb189bd6)
+![Image](https://github.com/user-attachments/assets/fb61eab0-d3e0-4c03-8074-ae72cb189bd6)
