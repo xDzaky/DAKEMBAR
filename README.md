@@ -87,6 +87,7 @@ DAKEMBAR/
 ├── requirements.txt     
 ├── runtime.txt          
 └── vercel.json          
+```
 
 ## 📊 Dokumentasi API Baru
 Endpoint | Method | Deskripsi
@@ -108,7 +109,7 @@ Untuk pengguna versi lama (SQLite):
 2. Jalankan migrasi otomatis:
    ```bash
    python migrate.py --from-sqlite --to-json
-   ```
+   
 
 ## 🤝 Berkontribusi
 1. Fork repository
