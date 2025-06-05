@@ -10,7 +10,6 @@ Aplikasi manajemen stok berbasis web untuk operator sarpras sekolah dengan fitur
 - **🔄 Sistem Stok Otomatis** - Perhitungan real-time saat barang masuk/keluar
 - **🚨 Notifikasi Stok Minim** - Peringatan visual untuk stok yang hampir habis
 - **📈 Laporan Bulanan** - Grafik interaktif riwayat transaksi
-- **🔒 Keamanan Enhanced** - Proteksi route dan validasi input
 
 ## 🔐 Login Default
 - **Username**: admin
@@ -97,5 +96,3 @@ DAKEMBAR/
 ![Form](https://github.com/user-attachments/assets/7d2fafe7-5da5-4ecf-8840-9d99adcf5cba)
 
 
-## 📜 Lisensi
-MIT License - Bebas digunakan dan dimodifikasi untuk kebutuhan sekolah
