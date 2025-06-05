@@ -41,24 +41,26 @@ python app.py
 ```
 Buka http://localhost:5000
 
-## 📚 Panduan Pengguna Lengkap
+## 📚 Panduan Penggunaan
 
-### 1. Manajemen Barang Masuk
-- Fitur auto-complete untuk uraian barang
-- Perhitungan otomatis: `total = jumlah × harga_satuan`
-- Pencatatan nomor dokumen dan keterangan
+### 1. Manajemen Barang
+- **Tambah Barang**: 
+  - Isi form di `/barang/tambah`
+  - Sistem otomatis update stok
 
-### 2. Sistem Pengeluaran Cerdas
+- **Edit/Hapus**:
+  - Akses melalui menu Barang → Daftar Barang
+
+### 2. Pengeluaran Barang
 ```python
 # Contoh validasi stok dalam code:
 if InventoryManager.check_stock(uraian) < jumlah:
-    return "Stok tidak mencukupi!"
+    return error("Stok tidak mencukupi")
 ```
 
-### 3. Fitur Admin:
-- Tambah/Edit/Hapus operator
-- Setel minimum stok per item
-- Backup data otomatis
+### 3. Monitoring Stok
+- Peringatan visual untuk stok dibawah minimum
+- Filter dan pencarian cepat
 
 ## 🗂 Struktur Proyek 
 ```
