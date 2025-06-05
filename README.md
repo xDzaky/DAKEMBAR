@@ -12,6 +12,10 @@ Aplikasi manajemen stok berbasis web untuk operator sarpras sekolah dengan fitur
 - **📈 Laporan Bulanan** - Grafik interaktif riwayat transaksi
 - **🔒 Keamanan Enhanced** - Proteksi route dan validasi input
 
+## 🔐 Login Default
+- **Username**: admin
+- **Password**: admin123
+
 ## 🛠 Teknologi Terupdate
 - **Backend**: Python 3.10 + Flask 2.3
 - **Database**: JSON-based (file `db/data.json`)
