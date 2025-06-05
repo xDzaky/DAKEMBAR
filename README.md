@@ -87,72 +87,20 @@ DAKEMBAR/
 └── vercel.json          # Konfigurasi deploy
 ```
 
-## Deploy ke Vercel
-1. Fork repository ini ke akun GitHub Anda
-2. Buat proyek baru di Vercel
-3. Import dari GitHub dengan konfigurasi:
-   - **Framework Preset**: Other
-   - **Build Command**: `pip install -r requirements.txt`
-   - **Environment Variables**:
-     ```
-     FLASK_APP = app.py
-     FLASK_ENV = production
-     ```
 
 ## Dokumentasi Teknis
 ### Diagram Alur
 ![Flowchart](https://github.com/user-attachments/assets/10f998d0-17f7-4d60-ac90-33d16daf11e5)
 
-### Cuplikan Kode Penting
-```python
-# Contoh fungsi tambah barang
-@app.route('/barang/tambah', methods=['POST'])
-def tambah_barang():
-    if 'username' not in session:
-        return redirect(url_for('login'))
-    
-    # Ambil data dari form
-    data = request.form
-    
-    # Simpan ke database
-    with sqlite3.connect(DATABASE) as conn:
-        conn.execute('INSERT INTO barang (...) VALUES (?,?,...)', data)
-        conn.commit()
-    
-    return redirect(url_for('barang_list'))
-```
-
-## Kontribusi
-1. Buat issue terlebih dahulu untuk diskusi fitur baru
-2. Fork project dan buat branch baru
-3. Submit Pull Request dengan deskripsi jelas
-
----
 
 ⚠️ **Catatan Penting**:  
 Aplikasi ini menggunakan SQLite untuk penyimpanan lokal. Untuk penggunaan produksi, disarankan migrasi ke database cloud seperti Supabase atau MySQL.
 ```
+**Dashboard**:  
+![dashboard](https://github.com/user-attachments/assets/862c0848-8513-4f6b-9848-0f4acc7140cc)
 
----
+**Tambah_Barang**:  
+![tambah_barang](https://github.com/user-attachments/assets/7d2fafe7-5da5-4ecf-8840-9d99adcf5cba)
 
-### Poin Kunci yang Dibedakan dari Contoh Teman:
-1. **Spesifik ke Proyek Anda**:
-   - Fokus pada fitur **keluar/masuk barang** (bukan peminjaman)
-   - Tekankan validasi stok otomatis
-   - Sertakan contoh data barang yang relevan
-
-2. **Instruksi Deployment**:
-   - Panduan deploy ke Vercel (sesuai masalah yang pernah dihadapi)
-   - Warning tentang keterbatasan SQLite
-
-3. **Dokumentasi Teknis**:
-   - Sertakan cuplikan kode dari `app.py` yang relevan
-   - Diagram alur disederhanakan sesuai fitur aktual
-
-4. **Keamanan**:
-   - Peringatan untuk mengganti password default
-   - Penjelasan autentikasi session
-
-- ![dashboard](https://github.com/user-attachments/assets/862c0848-8513-4f6b-9848-0f4acc7140cc)
-- ![tambah_barang](https://github.com/user-attachments/assets/7d2fafe7-5da5-4ecf-8840-9d99adcf5cba)
-- ![pengeluaran_barang](https://github.com/user-attachments/assets/fb61eab0-d3e0-4c03-8074-ae72cb189bd6)
+**Pengeluaran_Barang**:  
+![pengeluaran_barang](https://github.com/user-attachments/assets/fb61eab0-d3e0-4c03-8074-ae72cb189bd6)
