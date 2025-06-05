@@ -14,9 +14,8 @@ Aplikasi manajemen stok berbasis web untuk operator sarpras sekolah dengan fitur
 
 ## 🛠 Teknologi Terupdate
 - **Backend**: Python 3.10 + Flask 2.3
-- **Database**: JSON-based (file `db/data.json`) - lebih ringan dari SQLite
+- **Database**: JSON-based (file `db/data.json`)
 - **Frontend**: Jinja2 templates + Chart.js
-- **Deployment**: Vercel + Serverless Functions
 
 ## 🚀 Panduan Instalasi (Versi Terbaru)
 
@@ -26,19 +25,15 @@ Aplikasi manajemen stok berbasis web untuk operator sarpras sekolah dengan fitur
 
 ### Langkah:
 ```bash
+# Clone repositori
 git clone https://github.com/xDzaky/DAKEMBAR.git
-cd DAKEMBAR
+cd DAKEMBAR-main
 
-# Gunakan Pipenv untuk virtual environment
-pip install pipenv
-pipenv install
-pipenv shell
-
-# Inisialisasi database
-python app.py --init
+# Install dependencies
+pip install -r requirements.txt
 
 # Jalankan aplikasi
-flask run --debug
+python app.py
 ```
 Buka http://localhost:5000
 
@@ -61,25 +56,31 @@ if InventoryManager.check_stock(uraian) < jumlah:
 - Setel minimum stok per item
 - Backup data otomatis
 
-## 🗂 Struktur Proyek Terupdate
+## 🗂 Struktur Proyek 
 ```
 DAKEMBAR/
 ├── db/
-│   ├── data.json        # Database JSON utama
-│   └── backup/          # Auto-backup harian
+│   └── data.json        # Database JSON utama
 ├── static/
-│   ├── css/
-│   │   └── dashboard.css
-│   └── js/
-│       └── chart.js     # Visualisasi data
+│   ├── form_barang.css
+│   ├── form_pengeluaran.css
+│   ├── list_barang.css  
+│   ├── list_pengeluaran.css
+│   ├── stok_barang.css
+│   └── style.css        # CSS global
 ├── templates/
-│   ├── auth/            # Halaman login/register
-│   ├── components/      # Partial templates
-│   └── ...              # Halaman utama
-├── app.py               # Main app (Flask)
-├── requirements.txt     # Dependencies
-└── vercel.json          # Konfigurasi deploy
-```
+│   ├── auth/
+│   │   └── login.html
+│   ├── form_barang.html
+│   ├── form_pengeluaran.html
+│   ├── index.html       # Dashboard utama
+│   ├── list_barang.html
+│   ├── list_pengeluaran.html
+│   └── stok_barang.html
+├── app.py               
+├── requirements.txt     
+├── runtime.txt          
+└── vercel.json          
 
 ## 📊 Dokumentasi API Baru
 Endpoint | Method | Deskripsi
